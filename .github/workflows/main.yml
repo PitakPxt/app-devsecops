@@ -19,17 +19,17 @@ jobs:
       - name: Set up Node.js version 20
         uses: actions/setup-node@v3
         with:
-          node-version: "20" # ตัวอย่างเช่น, ใช้เวอร์ชัน 14
+          node-version: ${{ env.NODE_VERSION  }} 
 
       - name: npm install, build
         run: |
           npm install
-          npm run build 
+          npm run build
 
       - name: Package and upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app # ใช้ชื่อเดียวกันเพื่อความสอดคล้อง
+          name: app 
           path: .
 
   deploy:
@@ -49,13 +49,9 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # ตัวอย่างการใช้ creds
+  
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
