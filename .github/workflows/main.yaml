@@ -1,4 +1,7 @@
-name: Deploy to Azure App Service
+name: Deploy WebApp to azure
+
+env:
+    AZURE_WEBAPP_NAME: pitak-web-app
 
 on:
   push:
@@ -10,23 +13,40 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - name: Use Node.js version 20
+      uses: actions/setup-node@v4
       with:
-        node-version: '14' # หรือเวอร์ชันที่โปรเจกต์ของคุณใช้
+        node-version: ${{ env.NODE_VERSION }} # หรือเวอร์ชันที่โปรเจกต์ของคุณใช้
 
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+    - name: npm install, build
+      run:  npm install
 
-    - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
+    - name: Package and upload artifact
+      uses: actions/upload-node@v4
       with:
-        app-name: pitak-web-app # ชื่อแอปพลิเคชัน Azure App Service ของคุณ
-        slot-name: 'production' # ถ้ามีการใช้ slot
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # ตั้งค่าใน GitHub Secrets
-        package: .
+        name: app
+        path: .
+
+  deploy:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: "production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: .
+
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: $ {{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  
