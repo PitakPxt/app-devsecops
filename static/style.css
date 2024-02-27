@@ -1,0 +1,79 @@
+body{
+  font-family: kanit;
+  font-weight: 400;
+  color: white;
+  background-image: url('../images/bg.png');
+  background: linear-gradient(234deg, rgba(18,33,64,1) 0%, rgb(33, 54, 59) 100%);
+  background-repeat: no-repeat;
+  background-size:cover;
+  margin-bottom: 70px;
+}
+
+.tableColor{
+  background: linear-gradient(234deg, rgba(23,82,96,1) 0%, rgba(76,157,138,1) 100%);
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+h1{
+  font-size: 55px;
+  font-weight: 400;
+}
+
+.fontWeight{
+  font-weight: 300;
+}
+
+span{
+  font-size: 25px;
+}
+
+.TextColorGreen{
+  color: #5effd3;
+  font-size: 55px;
+}
+
+.TextListColorGreen{
+  color: #5effd3;
+  font-size: 28px;
+}
+
+table{
+  width: 80%;
+  margin: auto;
+  border-spacing: 10px;
+}
+
+td{
+  text-align: center;
+  padding: 8px;
+}
+
+.imgsize1{
+  width: 15%;
+  margin: 0 10px;
+}
+
+.imgsize2{
+  width: 14%;
+  margin: 0 12px;
+}
+
+.imgsize3{
+  width: 65px;
+}
+
+.imgsize4{
+  width: 18%;
+  margin: 0 12px;
+}
+
+.tableList{
+  width: 100%
+}
+
+.tableColor:hover{
+ transform: scale(1.05);
+ box-shadow: 6px 5px 5px rgba(251, 255, 149, 0.691) ;
+}
+
