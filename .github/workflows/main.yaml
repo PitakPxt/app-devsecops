@@ -26,7 +26,7 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: <YOUR_APP_NAME> # ชื่อแอปพลิเคชัน Azure App Service ของคุณ
+        app-name: pitak-web-app # ชื่อแอปพลิเคชัน Azure App Service ของคุณ
         slot-name: 'production' # ถ้ามีการใช้ slot
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # ตั้งค่าใน GitHub Secrets
         package: .
