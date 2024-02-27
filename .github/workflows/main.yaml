@@ -1,5 +1,8 @@
 name: deploy WebApp Azure
 
+env:
+    AZURE_WEBAPP_NAME: pitak-web-app
+
 on:
   push:
     branches:
@@ -13,21 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
+      - name: Use Node.js version 20
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: npm install, build
-        run: |
-          npm install
-          npm run build
+        run: npm install
 
       - name: Package and upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: node-app 
-          path: release.zip
+          name: app 
+          path: .
 
   deploy:
     permissions:
@@ -36,23 +37,16 @@ jobs:
     needs: build
     environment:
       name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: app
           path: .
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} 
-
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
