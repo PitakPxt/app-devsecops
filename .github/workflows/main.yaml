@@ -21,7 +21,7 @@ jobs:
       - name: npm install, build
         run: |
           npm install
-          npm run build # สมมติว่าคุณมี script build ใน package.json ของคุณ
+          npm run build
 
       - name: Package and upload artifact
         uses: actions/upload-artifact@v3
