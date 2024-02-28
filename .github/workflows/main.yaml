@@ -1,4 +1,4 @@
-name: deploy WebApp Azure
+name: Deploy WebApp Azure
 
 env:
     AZURE_WEBAPP_NAME: pitak-web-app
