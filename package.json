@@ -6,6 +6,7 @@
   "type": "module",
   "dependencies": {
     "@hono/node-server": "^1.8.1",
+    "express": "^4.18.2",
     "hono": "^4.0.4",
     "typescript": "^5.3.3"
   },
